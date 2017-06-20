@@ -62,12 +62,12 @@ function renderComponent( component, element ) {
  * @return     {String}  code html des attributs du component
  */
 function renderComponentAttributes( component ) {
-	var attributes = [],
+	var attributesHTML = [],
 		attribute;
 	for ( attribute in component.attributes ) {
-		attributes.push( ' '+attribute+'="'+component.attributes[ attribute ]+'"' );
+		attributesHTML.push( ' '+attribute+'="'+component.attributes[ attribute ]+'"' );
 	}
-	return attributes.join('');
+	return attributesHTML.join('');
 }
 
 /**
@@ -77,17 +77,17 @@ function renderComponentAttributes( component ) {
  * @see renderComponent()
  */
 function renderComponentChildren( component ) {
-	var children = [];
+	var childrenHTML = [];
 	// pour limiter les concaténations de chaines, on utilise un array
 	// la fonction array.map permet de générér un novueau tableau
 	// à partir des valeurs de component.children
-	children = component.children.map( function(child){
+	childrenHTML = component.children.map( function(child){
 		// comme le composant supporte des enfants de type différents
 		// (String ou Component) il faut faire le test ici
 		return typeof child === 'string' ? child : renderComponent( child );
 	});
 	// on retourne la chaine complète
-	return children.join('');
+	return childrenHTML.join('');
 }
 
 function createButton( label, attributes ) {
