@@ -30,7 +30,7 @@ Mettre en place un environnement de développement permettant de compiler le cod
 
 3. renommer le dossier `js` en `src` puis compiler le JS à l'aide de Babel CLI :
 	```
-	.\node_modules\\.bin\babel src -d build 
+	.\node_modules\.bin\babel src -d build 
 	```
    Corriger le code du fichier index.html pour qu'il utilise le fichier généré dans le dossier `'build'` plutôt que le fichier de l'ancien dossier `'js'`.
    Constater que le fichier généré par Babel n'est pas transpilé mais reste intact :grimacing:
