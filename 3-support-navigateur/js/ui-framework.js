@@ -1,23 +1,24 @@
+// use strict reste nécessaire en es6+ sauf dnas les classes et les modules
+// où il est implicite
 "use strict";
 
 /**
  * Fonction permettant d'initialiser un objet littéral component.
  * Permet de l'initialiser avec son tagName, une liste d'attributs et des enfants.
- * Les attributs et les enfants peuvent être modifiés par la suite
- * à l'aide des fonctions setAttribute et appendChild
  * @param  {String} tagName    Nom de la balise html à générer
  * @param  {Object} attributes Liste des attributs html à ajouter sous la forme de paires clé:valeur
- * @param  {Array}  children   Liste des enfants du composant. Chaque enfant peut être un autre Component ou une String.
+ * @param  {Array}  children   Liste des enfants du composant. Chaque enfant peut être un autre component ou une String.
  */
-function createComponent( tagName, attributes, children ) {
-	// valeurs par défaut
-	var c = {
-		tagName: tagName || 'div',
-		attributes: attributes || {},
-		children: children || []
-	};
-	return c;
-}
+// on utilise ici une arrow function et des valeurs par défaut
+const createComponent = ( tagName = 'div', attributes = {}, children = [] ) => ({
+	// on utilise la notation raccourcie pour la création d'objets littéraux
+	// les parenthèses autour de l'objet littéral permettent au navigateur
+	// de savoir qu'il s'agit d'une valeur de retour de type objet littéral
+	// et pas d'un bloc de code !
+	tagName,
+	attributes,
+	children
+});
 
 /**
  * Ajoute ou remplace un attribut.HTML dans un composant
@@ -26,7 +27,7 @@ function createComponent( tagName, attributes, children ) {
  * @param {String} value valeur de l'attribut
  * @see getComponentAttribute()
  */
-function setComponentAttribute( component, name, value ) {
+const setComponentAttribute = ( component, name, value ) =>	{
 	component.attributes[ name ] = value;
 }
 
@@ -36,9 +37,9 @@ function setComponentAttribute( component, name, value ) {
  * @param {String} name  Clé de l'attribut à récupérer
  * @see setComponentAttribute()
  */
-function getComponentAttribute( component, name ) {
-	return component[ name ];
-}
+// utilisation d'une arrow function en notation raccourcie
+// la partie après la flèche est la valeur de retour
+const getComponentAttribute = ( component, name ) => component[ name ];
 
 
 /**
@@ -48,10 +49,13 @@ function getComponentAttribute( component, name ) {
  * @see renderComponentAttributes()
  * @see renderComponentChildren()
  */
-function renderComponent( component, element ) {
-	var html = '<'+ component.tagName + ' ' + renderComponentAttributes(component) +'>'+
-				renderComponentChildren( component ) +
-			'</'+ component.tagName +'>';
+const renderComponent = ( component, element = null ) => {
+	// utilisation du destructuring pour accéder à une propriété d'un objet
+	const {tagName} = component;
+	// utilisation d'une arrow function
+	const html = `<${tagName} ${renderComponentAttributes(component)}>
+				${renderComponentChildren( component )}
+			</${tagName}>`;
 	if ( element instanceof Element ) {
 		element.innerHTML = html;
 	}
@@ -63,11 +67,12 @@ function renderComponent( component, element ) {
  * @param      {Object}    component  Le composant dont on doit rendre les attributs
  * @return     {String}  code html des attributs du component
  */
-function renderComponentAttributes( component ) {
-	var attributes = [],
-		attribute;
-	for ( attribute in component.attributes ) {
-		attributes.push( ' '+attribute+'="'+component.attributes[ attribute ]+'"' );
+const renderComponentAttributes = component => {
+	const attributes = [];
+	// let étant une déclaration scopée, plus besoin de la déclarer en haut de fonction
+	// `attribute` n'existe qu'à l'intérieur du for
+	for ( let attribute in component.attributes ) {
+		attributes.push( ` ${attribute}="${component.attributes[ attribute ]}"` );
 	}
 	return attributes.join('');
 }
@@ -78,29 +83,22 @@ function renderComponentAttributes( component ) {
  * @return     {String}  code html des enfants du component
  * @see renderComponent()
  */
-function renderComponentChildren( component ) {
-	var children = [];
-	// on utilise ici le forEach avec une Arrow Function
-	// ce qui simplifie légèrement le code
-	component.children.forEach( function(child){
-		// comme le composant supporte des enfants de type différents
-		// (String ou Component) il faut faire le test ici
-		// NB: instanceof Component retourne true également pour les classes filles
-		children.push( typeof child === 'string' ? child : renderComponent( child ) );
-	});
-	return children.join('');
-}
+const renderComponentChildren = component => component.children.map(
+		child => typeof child === 'string' ? child : renderComponent( child )
+	).join('');
+// NB : cette notation bien qu'ultra abrégée et profitant des évolutions de la syntaxe ES6+
+// n'en reste pas moins peu lisible.
 
-function createButton( label, attributes ) {
-	return createComponent( 'button', attributes, [ label ] );
-}
+const createButton = ( label = 'Ne surtout pas cliquer ici', attributes ) =>
+	createComponent( 'button', attributes, [ label ] );
 
-function createRoundedRedButton( label, attributes ) {
-	var a = {}, attribute;
-
-	for ( attribute in attributes ) {
-		a[ attribute ] = attributes[ attribute ];
-	}
-	a.style = 'border-radius: 5px; color: white; background-color: red';
+const createRoundedRedButton = ( label, attributes ) => {
+	// on utilise ici une feature en stage-3 à l'heure actuelle
+	// cf. https://github.com/tc39/proposal-object-rest-spread
+	// nécessite l'activation des fonctionnalités javascript expérimentales dans chrome
+	const a = {
+		...attributes,
+		style : 'border-radius: 5px; color: white; background-color: red'
+	};
 	return createButton( label, a );
 }
