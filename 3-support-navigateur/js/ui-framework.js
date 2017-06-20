@@ -17,7 +17,26 @@ const createComponent = ( tagName = 'div', attributes = {}, children = [] ) => (
 	// et pas d'un bloc de code !
 	tagName,
 	attributes,
-	children
+	children,
+	// Fonction Iterator :
+	// [Symbol.iterator]() {
+	// 	return {
+	// 		i: 0,
+	// 		children: this.children,
+	// 		next() {
+	// 			if (this.i >= this.children.length) {
+	// 				return { done: true };
+	// 			}
+	// 			return {value:this.children[ this.i++ ]};
+	// 		}
+	// 	}
+	// },
+	// Generator function :
+	// *getAttributes() {
+	// 	for (let attribute in this.attributes){
+	// 		yield { attribute, value: this.attributes[attribute] };
+	// 	}
+	// }
 });
 
 /**
@@ -68,13 +87,19 @@ const renderComponent = ( component, element = null ) => {
  * @return     {String}  code html des attributs du component
  */
 const renderComponentAttributes = component => {
-	const attributes = [];
+	const attributesHTML = [];
 	// let étant une déclaration scopée, plus besoin de la déclarer en haut de fonction
 	// `attribute` n'existe qu'à l'intérieur du for
 	for ( let attribute in component.attributes ) {
-		attributes.push( ` ${attribute}="${component.attributes[ attribute ]}"` );
+		attributesHTML.push( ` ${attribute}="${component.attributes[ attribute ]}"` );
 	}
-	return attributes.join('');
+
+	// utilisation de la generator function *getAttributes
+	// for ( const {attribute, value} of component.getAttributes() ) {
+	// 	attributesHTML.push( ` ${attribute}="${value}"` );
+	// }
+
+	return attributesHTML.join('');
 }
 
 /**
@@ -88,6 +113,15 @@ const renderComponentChildren = component => component.children.map(
 	).join('');
 // NB : cette notation bien qu'ultra abrégée et profitant des évolutions de la syntaxe ES6+
 // n'en reste pas moins peu lisible.
+//
+// version utilisant l'itérator
+// const renderComponentChildren = component => {
+// 	const childrenHTML = [];
+// 	for ( const child of component ){
+// 		childrenHTML.push( typeof child === 'string' ? child : renderComponent( child ) );
+// 	}
+// 	return childrenHTML.join('');
+// }
 
 const createButton = ( label = 'Ne surtout pas cliquer ici', attributes ) =>
 	createComponent( 'button', attributes, [ label ] );

@@ -15,3 +15,10 @@ Le code JavaScript contenu dans le fichier HTML fourni devra également être mi
 4. Remplacer les déclarations de fonction par des arrow functions
 5. ajouter des paramètres par défaut aux fonctions
 6. Utiliser les raccourcis de syntaxe des objets littéraux
+
+
+## Pour aller plus loin
+1. Modifier la fonction createComponent pour rendre iterable l'objet littéral retourné. Sa fonction iterator devra rertourner les children un à un. Modifier ensuite la fonction renderComponentChildren pour exploiter cet iterator.
+2. Modifier la fonction createComponent pour ajouter à l'objet littéral retourné une generator function 'getAttributes' qui permet de lister les attributs du component. Utiliser ensuite cette generator function dans la fonction renderComponentAttributes.
+
+
