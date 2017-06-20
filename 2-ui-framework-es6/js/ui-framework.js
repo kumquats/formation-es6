@@ -3,11 +3,9 @@
 /**
  * Fonction permettant d'initialiser un objet littéral component.
  * Permet de l'initialiser avec son tagName, une liste d'attributs et des enfants.
- * Les attributs et les enfants peuvent être modifiés par la suite
- * à l'aide des fonctions setAttribute et appendChild
  * @param  {String} tagName    Nom de la balise html à générer
  * @param  {Object} attributes Liste des attributs html à ajouter sous la forme de paires clé:valeur
- * @param  {Array}  children   Liste des enfants du composant. Chaque enfant peut être un autre Component ou une String.
+ * @param  {Array}  children   Liste des enfants du composant. Chaque enfant peut être un autre component ou une String.
  */
 function createComponent( tagName, attributes, children ) {
 	// valeurs par défaut
@@ -42,7 +40,7 @@ function getComponentAttribute( component, name ) {
 
 
 /**
- * Retourne le code html correspondant au Component et à ses enfants
+ * Retourne le code html correspondant au component et à ses enfants
  * et l'affiche éventuellement dans un élément html.
  * @return {String} code html généré
  * @see renderComponentAttributes()
@@ -80,14 +78,15 @@ function renderComponentAttributes( component ) {
  */
 function renderComponentChildren( component ) {
 	var children = [];
-	// on utilise ici le forEach avec une Arrow Function
-	// ce qui simplifie légèrement le code
-	component.children.forEach( function(child){
+	// pour limiter les concaténations de chaines, on utilise un array
+	// la fonction array.map permet de générér un novueau tableau
+	// à partir des valeurs de component.children
+	children = component.children.map( function(child){
 		// comme le composant supporte des enfants de type différents
 		// (String ou Component) il faut faire le test ici
-		// NB: instanceof Component retourne true également pour les classes filles
-		children.push( typeof child === 'string' ? child : renderComponent( child ) );
+		return typeof child === 'string' ? child : renderComponent( child );
 	});
+	// on retourne la chaine complète
 	return children.join('');
 }
 
