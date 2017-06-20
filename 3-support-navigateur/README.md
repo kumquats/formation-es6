@@ -32,7 +32,10 @@ Mettre en place un environnement de développement permettant de compiler le cod
 	```
 	.\node_modules\.bin\babel src -d build 
 	```
+   Si vous utilisez des features ESNext qui déclenchent une erreur (features pas encore supportées comme les Object rest spread transforms), commentez pour le moment les lignes en question et recompiler.
+   
    Corriger le code du fichier index.html pour qu'il utilise le fichier généré dans le dossier `'build'` plutôt que le fichier de l'ancien dossier `'js'`.
+
    Constater que le fichier généré par Babel n'est pas transpilé mais reste intact :grimacing:
 
 4. Activer la transpilation en ajoutant le preset `'env'` au projet. Ce preset contient les presets ES2015, ES206 et ES2017.
@@ -47,7 +50,7 @@ Mettre en place un environnement de développement permettant de compiler le cod
 	```
 	Recompiler l'application et constater la transpilation en ES5.
 
-5. La tranpilation avec le preset `'env'` fonctionne sauf pour les features en stage < 4. Pour transpiler l'intégralité des features ESNext, il faut utiliser les presets correspondant au stage voulu. Pour supporter la feature [Object rest spread transform](https://babeljs.io/docs/plugins/transform-object-rest-spread/) il faut ajouter le preset [stage-3](https://babeljs.io/docs/plugins/preset-stage-3/) et recompiler :
+5. La tranpilation avec le preset `'env'` fonctionne sauf pour les features en stage < 4. Pour transpiler l'intégralité des features ESNext, il faut utiliser les presets correspondant au stage voulu. Pour supporter la feature [Object rest spread transform](https://babeljs.io/docs/plugins/transform-object-rest-spread/) il faut par exemple ajouter le preset [stage-3](https://babeljs.io/docs/plugins/preset-stage-3/) :
 	```bash
 	npm install --save-dev babel-preset-stage-3
 	```
@@ -57,16 +60,21 @@ Mettre en place un environnement de développement permettant de compiler le cod
 	  "presets": ["env", "stage-3"]
 	}
 	```
-
+	Reste à décommenter les lignes commentées au point 3 puis recompiler.
+	
 6. Pour le support des generators, ajouter le plugin [babel-polyfill](https://babeljs.io/docs/usage/polyfill/) (noter le `--save` et pas `--save-dev`) :
 	```sh
 	npm install --save babel-polyfill
 	```
+	Ajouter ensuite le script de babel-polyfill dans le code html de la page (juste avant l'inclusion du fichier `build/ui-framework.js`) :
+	```html
+	<script src="node_modules/babel-polyfill/dist/polyfill.min.js"></script>
+	```
+
 
 7. Pour simplifier la compilation, ajouter une commande npm qui va servir de "raccourci" pour la commande babel : modifier le fichier `'package.json'` et modifier la clé "scripts" comme suit :
 	```json
 	"scripts": {
-	  
 	  "build": "babel src -d build"
 	},
 	```
@@ -75,7 +83,7 @@ Mettre en place un environnement de développement permettant de compiler le cod
 	npm run build
 	```
 
-8. A l'aide de la [documentation de babel](https://babeljs.io/docs/usage/cli/), ajouter une commande `npm run watch` qui permettra de lancer la compilation dès qu'une modification sera apportée à un fichier du dossier '`src`'. Ajouter aux deux commande (`build` et `watch`) le support des source-maps.
+8. A l'aide de la [documentation de babel](https://babeljs.io/docs/usage/cli/), ajouter une commande `npm run watch` qui permettra de lancer la compilation dès qu'une modification sera apportée à un fichier du dossier '`src`'. Ajouter aux deux commande (`build` et `watch`) le support des source-maps. Recompiler et inspecter le code dans les devtools de chrome puis mettre un breakpoint dans le fichier js du src, recharger la page et constater que chrome arrête bien l'exécution au bon endroit malgré le fait qu'il exécute la version compilée du JS.
 
 ## Instructions : Flow
 
@@ -102,7 +110,7 @@ Mettre en place un environnement de développement permettant de compiler le cod
 
 10. Ajouter des informations de typage aux paramètres des fonctions , aux valeurs de retour et à toutes les variables du code. Tester le typage avec la commande :
 	```bash
-	npm run flow
+	npm run flow --silent
 	```
 	Si tout est valide du premier coup (on peut toujours rêver :stuck_out_tongue_winking_eye:) afin de s'assurer que le typage fonctionne correctement, tentez de faire une affectation incorrecte dans votre code et de relancer flow.
 <!--

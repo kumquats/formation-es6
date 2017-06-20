@@ -1,3 +1,4 @@
+// @flow
 // use strict reste nécessaire en es6+ sauf dnas les classes et les modules
 // où il est implicite
 "use strict";
@@ -10,7 +11,7 @@
  * @param  {Array}  children   Liste des enfants du composant. Chaque enfant peut être un autre component ou une String.
  */
 // on utilise ici une arrow function et des valeurs par défaut
-const createComponent = ( tagName = 'div', attributes = {}, children = [] ) => ({
+const createComponent = ( tagName:string = 'div', attributes:{} = {}, children:Array<mixed> = [] ): {} => ({
 	// on utilise la notation raccourcie pour la création d'objets littéraux
 	// les parenthèses autour de l'objet littéral permettent au navigateur
 	// de savoir qu'il s'agit d'une valeur de retour de type objet littéral
@@ -19,24 +20,24 @@ const createComponent = ( tagName = 'div', attributes = {}, children = [] ) => (
 	attributes,
 	children,
 	// Fonction Iterator :
-	// [Symbol.iterator]() {
-	// 	return {
-	// 		i: 0,
-	// 		children: this.children,
-	// 		next() {
-	// 			if (this.i >= this.children.length) {
-	// 				return { done: true };
-	// 			}
-	// 			return {value:this.children[ this.i++ ]};
-	// 		}
-	// 	}
-	// },
+	[Symbol.iterator]() {
+		return {
+			i: 0,
+			children: this.children,
+			next() {
+				if (this.i >= this.children.length) {
+					return { done: true };
+				}
+				return {value:this.children[ this.i++ ]};
+			}
+		}
+	},
 	// Generator function :
-	// *getAttributes() {
-	// 	for (let attribute in this.attributes){
-	// 		yield { attribute, value: this.attributes[attribute] };
-	// 	}
-	// }
+	*getAttributes() {
+		for (let attribute:string in this.attributes){
+			yield { attribute, value: this.attributes[attribute] };
+		}
+	}
 });
 
 /**
@@ -46,7 +47,7 @@ const createComponent = ( tagName = 'div', attributes = {}, children = [] ) => (
  * @param {String} value valeur de l'attribut
  * @see getComponentAttribute()
  */
-const setComponentAttribute = ( component, name, value ) =>	{
+const setComponentAttribute = ( component, name:string, value:string ) =>	{
 	component.attributes[ name ] = value;
 }
 
@@ -58,7 +59,7 @@ const setComponentAttribute = ( component, name, value ) =>	{
  */
 // utilisation d'une arrow function en notation raccourcie
 // la partie après la flèche est la valeur de retour
-const getComponentAttribute = ( component, name ) => component[ name ];
+const getComponentAttribute = ( component, name:string ):string => component[ name ];
 
 
 /**
@@ -68,11 +69,11 @@ const getComponentAttribute = ( component, name ) => component[ name ];
  * @see renderComponentAttributes()
  * @see renderComponentChildren()
  */
-const renderComponent = ( component, element = null ) => {
+const renderComponent = ( component, element = null ):string => {
 	// utilisation du destructuring pour accéder à une propriété d'un objet
-	const {tagName} = component;
+	const {tagName}:{tagName:string} = component;
 	// utilisation d'une arrow function
-	const html = `<${tagName} ${renderComponentAttributes(component)}>
+	const html:string = `<${tagName} ${renderComponentAttributes(component)}>
 				${renderComponentChildren( component )}
 			</${tagName}>`;
 	if ( element instanceof Element ) {
@@ -87,17 +88,17 @@ const renderComponent = ( component, element = null ) => {
  * @return     {String}  code html des attributs du component
  */
 const renderComponentAttributes = component => {
-	const attributesHTML = [];
+	const attributesHTML:Array<string> = [];
 	// let étant une déclaration scopée, plus besoin de la déclarer en haut de fonction
 	// `attribute` n'existe qu'à l'intérieur du for
-	for ( let attribute in component.attributes ) {
-		attributesHTML.push( ` ${attribute}="${component.attributes[ attribute ]}"` );
-	}
+	// for ( let attribute in component.attributes ) {
+	// 	attributesHTML.push( ` ${attribute}="${component.attributes[ attribute ]}"` );
+	// }
 
 	// utilisation de la generator function *getAttributes
-	// for ( const {attribute, value} of component.getAttributes() ) {
-	// 	attributesHTML.push( ` ${attribute}="${value}"` );
-	// }
+	for ( const {attribute, value} of component.getAttributes() ) {
+		attributesHTML.push( ` ${attribute}="${value}"` );
+	}
 
 	return attributesHTML.join('');
 }
@@ -108,29 +109,29 @@ const renderComponentAttributes = component => {
  * @return     {String}  code html des enfants du component
  * @see renderComponent()
  */
-const renderComponentChildren = component => component.children.map(
-		child => typeof child === 'string' ? child : renderComponent( child )
-	).join('');
+// const renderComponentChildren = component => component.children.map(
+// 		child => typeof child === 'string' ? child : renderComponent( child )
+// 	).join('');
 // NB : cette notation bien qu'ultra abrégée et profitant des évolutions de la syntaxe ES6+
 // n'en reste pas moins peu lisible.
 //
 // version utilisant l'itérator
-// const renderComponentChildren = component => {
-// 	const childrenHTML = [];
-// 	for ( const child of component ){
-// 		childrenHTML.push( typeof child === 'string' ? child : renderComponent( child ) );
-// 	}
-// 	return childrenHTML.join('');
-// }
+const renderComponentChildren = component => {
+	const childrenHTML:Array<string> = [];
+	for ( const child of component ){
+		childrenHTML.push( typeof child === 'string' ? child : renderComponent( child ) );
+	}
+	return childrenHTML.join('');
+}
 
-const createButton = ( label = 'Ne surtout pas cliquer ici', attributes ) =>
+const createButton = ( label:string = 'Ne surtout pas cliquer ici', attributes:{} ):{} =>
 	createComponent( 'button', attributes, [ label ] );
 
-const createRoundedRedButton = ( label, attributes ) => {
+const createRoundedRedButton = ( label:string, attributes:{} ):{} => {
 	// on utilise ici une feature en stage-3 à l'heure actuelle
 	// cf. https://github.com/tc39/proposal-object-rest-spread
 	// nécessite l'activation des fonctionnalités javascript expérimentales dans chrome
-	const a = {
+	const a:{} = {
 		...attributes,
 		style : 'border-radius: 5px; color: white; background-color: red'
 	};
