@@ -1,3 +1,4 @@
+
 // use strict reste nécessaire en es6+ sauf dnas les classes et les modules
 // où il est implicite
 "use strict";
@@ -57,7 +58,7 @@ var createComponent = function createComponent() {
 
 						attribute = _context.t1.value;
 						_context.next = 5;
-						return { attribute: attribute, value: this.attributes[attribute] };
+						return { attribute: attribute, value: getComponentAttribute(this, attribute) };
 
 					case 5:
 						_context.next = 1;
@@ -75,24 +76,24 @@ var createComponent = function createComponent() {
 /**
  * Ajoute ou remplace un attribut.HTML dans un composant
  * @param {Object} component  composant à modifier
- * @param {String} name  Clé de l'attribut à modifier/ajouter
+ * @param {String} attribute  Clé de l'attribut à modifier/ajouter
  * @param {String} value valeur de l'attribut
  * @see getComponentAttribute()
  */
-var setComponentAttribute = function setComponentAttribute(component, name, value) {
+var setComponentAttribute = function setComponentAttribute(component, attribute, value) {
 	component.attributes[name] = value;
 };
 
 /**
  * Récupère la valeur d'un attribut HTML d'un composant
  * @param {Object} component  composant à modifier
- * @param {String} name  Clé de l'attribut à récupérer
+ * @param {String} attribute  Clé de l'attribut à récupérer
  * @see setComponentAttribute()
  */
 // utilisation d'une arrow function en notation raccourcie
 // la partie après la flèche est la valeur de retour
-var getComponentAttribute = function getComponentAttribute(component, name) {
-	return component[name];
+var getComponentAttribute = function getComponentAttribute(component, attribute) {
+	return component.attributes[attribute];
 };
 
 /**
@@ -212,7 +213,6 @@ var createButton = function createButton() {
 var createRoundedRedButton = function createRoundedRedButton(label, attributes) {
 	// on utilise ici une feature en stage-3 à l'heure actuelle
 	// cf. https://github.com/tc39/proposal-object-rest-spread
-	// nécessite l'activation des fonctionnalités javascript expérimentales dans chrome
 	var a = _extends({}, attributes, {
 		style: 'border-radius: 5px; color: white; background-color: red'
 	});

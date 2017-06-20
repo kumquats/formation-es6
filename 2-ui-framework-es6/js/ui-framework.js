@@ -20,22 +20,22 @@ function createComponent( tagName, attributes, children ) {
 /**
  * Ajoute ou remplace un attribut.HTML dans un composant
  * @param {Object} component  composant à modifier
- * @param {String} name  Clé de l'attribut à modifier/ajouter
+ * @param {String} attribute  Clé de l'attribut à modifier/ajouter
  * @param {String} value valeur de l'attribut
  * @see getComponentAttribute()
  */
-function setComponentAttribute( component, name, value ) {
-	component.attributes[ name ] = value;
+function setComponentAttribute( component, attribute, value ) {
+	component.attributes[ attribute ] = value;
 }
 
 /**
  * Récupère la valeur d'un attribut HTML d'un composant
  * @param {Object} component  composant à modifier
- * @param {String} name  Clé de l'attribut à récupérer
+ * @param {String} attribute  Clé de l'attribut à récupérer
  * @see setComponentAttribute()
  */
-function getComponentAttribute( component, name ) {
-	return component[ name ];
+function getComponentAttribute( component, attribute ) {
+	return component.attributes[ attribute ];
 }
 
 
@@ -65,7 +65,7 @@ function renderComponentAttributes( component ) {
 	var attributesHTML = [],
 		attribute;
 	for ( attribute in component.attributes ) {
-		attributesHTML.push( ' '+attribute+'="'+component.attributes[ attribute ]+'"' );
+		attributesHTML.push( ' '+attribute+'="'+getComponentAttribute(component, attribute)+'"' );
 	}
 	return attributesHTML.join('');
 }

@@ -34,7 +34,7 @@ const createComponent = ( tagName = 'div', attributes = {}, children = [] ) => (
 	// Generator function :
 	// *getAttributes() {
 	// 	for (let attribute in this.attributes){
-	// 		yield { attribute, value: this.attributes[attribute] };
+	// 		yield { attribute, value: getComponentAttribute(this, attribute) };
 	// 	}
 	// }
 });
@@ -42,23 +42,23 @@ const createComponent = ( tagName = 'div', attributes = {}, children = [] ) => (
 /**
  * Ajoute ou remplace un attribut.HTML dans un composant
  * @param {Object} component  composant à modifier
- * @param {String} name  Clé de l'attribut à modifier/ajouter
+ * @param {String} attribute  Clé de l'attribut à modifier/ajouter
  * @param {String} value valeur de l'attribut
  * @see getComponentAttribute()
  */
-const setComponentAttribute = ( component, name, value ) =>	{
-	component.attributes[ name ] = value;
+const setComponentAttribute = ( component, attribute, value ) =>	{
+	component.attributes[ attribute ] = value;
 }
 
 /**
  * Récupère la valeur d'un attribut HTML d'un composant
  * @param {Object} component  composant à modifier
- * @param {String} name  Clé de l'attribut à récupérer
+ * @param {String} attribute  Clé de l'attribut à récupérer
  * @see setComponentAttribute()
  */
 // utilisation d'une arrow function en notation raccourcie
 // la partie après la flèche est la valeur de retour
-const getComponentAttribute = ( component, name ) => component[ name ];
+const getComponentAttribute = ( component, attribute ) => component.attributes[ attribute ];
 
 
 /**
@@ -91,7 +91,7 @@ const renderComponentAttributes = component => {
 	// let étant une déclaration scopée, plus besoin de la déclarer en haut de fonction
 	// `attribute` n'existe qu'à l'intérieur du for
 	for ( let attribute in component.attributes ) {
-		attributesHTML.push( ` ${attribute}="${component.attributes[ attribute ]}"` );
+		attributesHTML.push( ` ${attribute}="${getComponentAttribute(component, attribute)}"` );
 	}
 
 	// utilisation de la generator function *getAttributes

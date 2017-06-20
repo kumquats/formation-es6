@@ -35,7 +35,7 @@ const createComponent = ( tagName:string = 'div', attributes:{} = {}, children:A
 	// Generator function :
 	*getAttributes() {
 		for (let attribute:string in this.attributes){
-			yield { attribute, value: this.attributes[attribute] };
+			yield { attribute, value: getComponentAttribute(this, attribute) };
 		}
 	}
 });
@@ -43,23 +43,23 @@ const createComponent = ( tagName:string = 'div', attributes:{} = {}, children:A
 /**
  * Ajoute ou remplace un attribut.HTML dans un composant
  * @param {Object} component  composant à modifier
- * @param {String} name  Clé de l'attribut à modifier/ajouter
+ * @param {String} attribute  Clé de l'attribut à modifier/ajouter
  * @param {String} value valeur de l'attribut
  * @see getComponentAttribute()
  */
-const setComponentAttribute = ( component, name:string, value:string ) =>	{
+const setComponentAttribute = ( component, attribute:string, value:string ) =>	{
 	component.attributes[ name ] = value;
 }
 
 /**
  * Récupère la valeur d'un attribut HTML d'un composant
  * @param {Object} component  composant à modifier
- * @param {String} name  Clé de l'attribut à récupérer
+ * @param {String} attribute  Clé de l'attribut à récupérer
  * @see setComponentAttribute()
  */
 // utilisation d'une arrow function en notation raccourcie
 // la partie après la flèche est la valeur de retour
-const getComponentAttribute = ( component, name:string ):string => component[ name ];
+const getComponentAttribute = ( component, attribute:string ):string => component.attributes[ attribute ];
 
 
 /**
