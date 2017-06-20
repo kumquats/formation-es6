@@ -113,162 +113,51 @@ Mettre en place un environnement de développement permettant de compiler le cod
 	npm run flow --silent
 	```
 	Si tout est valide du premier coup (on peut toujours rêver :stuck_out_tongue_winking_eye:) afin de s'assurer que le typage fonctionne correctement, tentez de faire une affectation incorrecte dans votre code et de relancer flow.
-<!--
+
 
 ## Instructions : ESLint
 
-11. 
-
-????
-Flow comments https://babeljs.io/docs/plugins/transform-flow-comments/ ? 
-"build": "eslint & flow & babel src -d build" ?
-flow plugin ?
-
-
-
-## Objectifs 
-
-L'objectif de ce TP est de mettre en place Babel, de compiler un projet, et d'installer les outils nécessaires.
-
-## Préparatifs 
-
-- Lancer cette commande à la racine du projet et laisser les configurations par défaut
-```sh
-npm init
-```
-
-## Instructions 
-
-1. Mise en place de Babel
-
-	1. Installation de Babel
-
-	2. Votre fichier package.json doit ressembler à ça
-```json
-{
-  "name": "tp-flow",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-	"test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-	"babel-cli": "^6.24.1",
-	"babel-core": "^6.25.0",
-	"babel-loader": "^7.0.0",
-  }
-}
-```
-
-	2. Création du fichier .babelrc à la racine du projet
-
-	3. Installation Presets
-		
-		1. 
-		```sh
-		npm install --save-dev babel-cli babel-preset-es2015
-		```
-		2. Dans le fichier .babelrc
-		```sh
-		{
-			// Permet d'activer la compilation du code ES6
-			"presets": ["es2015"]
-		}
-		```
-
-	4. Installation du plugin syntax-flow 
-		
-		1. 
-		```sh
-		npm install --save-dev babel-plugin-syntax-flow
-		```
-		2. A rajouter dans le fichier.babelrc
-		```sh
-		{
-		  "plugins": ["syntax-flow"]
-		}
-		```
-
-	5. Installation de Polyfill
-	```sh
-	npm install --save-dev babel-polyfill
+11. Installer et configurer eslint dans le projet :
+	```bash
+	npm install --save-dev eslint
 	```
-
-	6. Build (Compilation du TP précédent)
-		1. Créer un dossier src à la racine du projet
-		2. Créer dans src un fichier index.js contenant du js
-		3. Créer un dossier build à la racine du projet 
-		4. rajouter la commande de build dans le package.json comme ceci:
-```json
-{
-	"name": "my-project",
-	"version": "1.0.0",
-	"scripts": {
-+     "build": "./node_modules/.bin/babel src -d build"
-	},
-	"devDependencies": {
-	  "babel-cli": "^6.0.0"
-	}
-  }
-```
-		5. Maintenant dans le terminal on peut donc compilé l'appli
-```sh
-npm run build
-```
-
-2. Ajouter Flow
-
-	1. Installation
-
-	```sh
-	npm install --save-dev babel-cli babel-preset-flow
-	```
-
-	2. Ajout dans le fichier .babelrc
-	
-	```sh
-	{
-		"presets": ["flow"]
+	package.json: 
+	```json
+	"scripts":{
+		"eslint": "eslint"
 	}
 	```
+	```bash
+	npm run eslint -- --init
+	```
+	Répondre aux questions posées et examiner le fichier .eslintrc.js généré
 
-	3. Compilation
-		1. Modifiez le fichier index.js pour utiliser le code suivant
-		```js
-		// @flow
-		// la ligne ci-dessus est nécessaire pour que Flow teste le fichier
+12. Installer le [plugin flow](https://www.npmjs.com/package/eslint-plugin-flowtype) et le [parser babel](https://www.npmjs.com/package/babel-eslint) (nécessaire pour faire fonctionner le plugin flow, le parser par défaut, espree, [ne supportant pas la syntaxe flow](https://github.com/eslint/espree/issues/278)) pour eslint :
+	```bash
+	npm install --save-dev eslint-plugin-flowtype babel-eslint
+	```
+	ajouter dans le fichier .eslintrc.js :
+	```
+	"parser": "babel-eslint",
+	"plugins": ["flowtype"],
+	```
 
-		// On spécifie ici que la variable a est un string à la quelle on 
-		// donne la valeur 12
-		let a:string = 12;
-		```
+13. Tester eslint avec le fichier `src/ui-framework.js` et corriger les erreurs retournées jusqu'à ce que la commande ne retourne plus d'erreurs :
+	```bash
+	npm run eslint src/ui-framework.js --silent
+	```
 
-		2. Cette fois-ci dans le package.json on modifie la commande build
-		```json
-		"build": "babel src/ -d build/"
-		```
+14. Comme une partie du code JS se trouve dans le document HTML, eslint retourne des erreurs car certaines fonctions ne sont pas utilisées. Déplacer donc le code JS contenu dans la page html vers le fichier ui-framework.js. Commenter les fonctions qui sont effectivement non utilisées.
 
-3. Installation Sublime Text ESLint
-	
-	1. Installation
-```bash
-npm install -g eslint
-```
-	2. Lancer la commande et vous obtiendrez un fichier .eslintrc
-```bash
-eslint --init
-```
+15. Dans Sublime Text :
+	- installer package control
+	- lancer la commande (CTRL+SHIFT+P) `Package Control: Install Package` et installer les packages `Babel`, `SublimeLinter`, `SublimeLinter-contrib-eslint` et `SublimeLinter-flow`
+	- Editer la configuration de sublimeLinter (User) dans Sublime Text (menu Preferences > Package Settings > SublimeLinter > Settings-User), et si pas déjà présent ajouter : 
+	```json
+	"syntax_map": {
+	  "JavaScript (Babel)": "javascript",
+	}
+	```
+	- Redémarrer Sublime Text, ouvrir le fichier ui-framework.js, modifier pour créer une erreur et constater que l'erreur s'affiche !
 
-	3. Modifiez le fichier index.js de cette façon
-```js
-let c = ;
-```
 
-	4. On peut donc lancer ESLint grâce à cette commande
-```sh
-eslint src/index.js
-```
--->

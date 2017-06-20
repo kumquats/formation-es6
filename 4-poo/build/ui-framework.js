@@ -1,7 +1,7 @@
 
 // use strict reste nécessaire en es6+ sauf dnas les classes et les modules
 // où il est implicite
-"use strict";
+'use strict';
 
 /**
  * Fonction permettant d'initialiser un objet littéral component.
@@ -80,9 +80,10 @@ var createComponent = function createComponent() {
  * @param {String} value valeur de l'attribut
  * @see getComponentAttribute()
  */
-var setComponentAttribute = function setComponentAttribute(component, attribute, value) {
-	component.attributes[name] = value;
-};
+// ESLint détecte que cette fonction est inutilisée, on la commente car, elle servira peut-être par la suite...
+// const setComponentAttribute = ( component, attribute:string, value:string ) =>	{
+// 	component.attributes[ name ] = value;
+// };
 
 /**
  * Récupère la valeur d'un attribut HTML d'un composant
@@ -123,6 +124,7 @@ var renderComponent = function renderComponent(component) {
  * @return     {String}  code html des attributs du component
  */
 var renderComponentAttributes = function renderComponentAttributes(component) {
+	//any pour autoriser le generator
 	var attributesHTML = [];
 	// let étant une déclaration scopée, plus besoin de la déclarer en haut de fonction
 	// `attribute` n'existe qu'à l'intérieur du for
@@ -175,6 +177,7 @@ var renderComponentAttributes = function renderComponentAttributes(component) {
 //
 // version utilisant l'itérator
 var renderComponentChildren = function renderComponentChildren(component) {
+	//any pour autoriser l'iterator
 	var childrenHTML = [];
 	var _iteratorNormalCompletion2 = true;
 	var _didIteratorError2 = false;
@@ -218,4 +221,12 @@ var createRoundedRedButton = function createRoundedRedButton(label, attributes) 
 	});
 	return createButton(label, a);
 };
-//# sourceMappingURL=ui-framework.js.map
+
+var component = createComponent('div', { style: 'border: 1px solid black' }, [createComponent('h3', {}, ['Test du ', createComponent('strong', { style: 'color: blue' }, ['framework']), ' ui']), createComponent('input', { type: 'text', value: 'Ca a l\'air de fonctionner correctement', style: 'width: 500px' })]);
+renderComponent(component, document.querySelector('#component-container'));
+
+var button = createButton('Ceci est un bouton');
+renderComponent(button, document.querySelector('#button-container'));
+
+var roundedRedButton = createRoundedRedButton('Ceci est un bouton rouge arrondi', { onclick: 'alert(\'au secours, on me clique dessus !\')' });
+renderComponent(roundedRedButton, document.querySelector('#rounded-red-button-container'));

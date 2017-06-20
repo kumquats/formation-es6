@@ -1,7 +1,7 @@
 // @flow
 // use strict reste nécessaire en es6+ sauf dnas les classes et les modules
 // où il est implicite
-"use strict";
+'use strict';
 
 /**
  * Fonction permettant d'initialiser un objet littéral component.
@@ -11,7 +11,7 @@
  * @param  {Array}  children   Liste des enfants du composant. Chaque enfant peut être un autre component ou une String.
  */
 // on utilise ici une arrow function et des valeurs par défaut
-const createComponent = ( tagName:string = 'div', attributes:{} = {}, children:Array<mixed> = [] ): {} => ({
+const createComponent = ( tagName:string = 'div', attributes:?{} = {}, children:Array<mixed> = [] ):any => ({
 	// on utilise la notation raccourcie pour la création d'objets littéraux
 	// les parenthèses autour de l'objet littéral permettent au navigateur
 	// de savoir qu'il s'agit d'une valeur de retour de type objet littéral
@@ -30,7 +30,7 @@ const createComponent = ( tagName:string = 'div', attributes:{} = {}, children:A
 				}
 				return {value:this.children[ this.i++ ]};
 			}
-		}
+		};
 	},
 	// Generator function :
 	*getAttributes() {
@@ -47,9 +47,10 @@ const createComponent = ( tagName:string = 'div', attributes:{} = {}, children:A
  * @param {String} value valeur de l'attribut
  * @see getComponentAttribute()
  */
-const setComponentAttribute = ( component, attribute:string, value:string ) =>	{
-	component.attributes[ name ] = value;
-}
+// ESLint détecte que cette fonction est inutilisée, on la commente car, elle servira peut-être par la suite...
+// const setComponentAttribute = ( component, attribute:string, value:string ) =>	{
+// 	component.attributes[ name ] = value;
+// };
 
 /**
  * Récupère la valeur d'un attribut HTML d'un composant
@@ -69,9 +70,9 @@ const getComponentAttribute = ( component, attribute:string ):string => componen
  * @see renderComponentAttributes()
  * @see renderComponentChildren()
  */
-const renderComponent = ( component, element = null ):string => {
+const renderComponent = ( component:{tagName:string, attributes:{}, children:[]}, element = null ):string => {
 	// utilisation du destructuring pour accéder à une propriété d'un objet
-	const {tagName}:{tagName:string} = component;
+	const {tagName} = component;
 	// utilisation d'une arrow function
 	const html:string = `<${tagName} ${renderComponentAttributes(component)}>
 				${renderComponentChildren( component )}
@@ -80,14 +81,14 @@ const renderComponent = ( component, element = null ):string => {
 		element.innerHTML = html;
 	}
 	return html;
-}
+};
 
 /**
  * Retourne le code html des attributes d'un component.
  * @param      {Object}    component  Le composant dont on doit rendre les attributs
  * @return     {String}  code html des attributs du component
  */
-const renderComponentAttributes = component => {
+const renderComponentAttributes = ( component:any ) => { //any pour autoriser le generator
 	const attributesHTML:Array<string> = [];
 	// let étant une déclaration scopée, plus besoin de la déclarer en haut de fonction
 	// `attribute` n'existe qu'à l'intérieur du for
@@ -101,7 +102,7 @@ const renderComponentAttributes = component => {
 	}
 
 	return attributesHTML.join('');
-}
+};
 
 /**
  * Retourne le code html des enfants d'un component.
@@ -116,18 +117,18 @@ const renderComponentAttributes = component => {
 // n'en reste pas moins peu lisible.
 //
 // version utilisant l'itérator
-const renderComponentChildren = component => {
+const renderComponentChildren = (component:any) => { //any pour autoriser l'iterator
 	const childrenHTML:Array<string> = [];
 	for ( const child of component ){
 		childrenHTML.push( typeof child === 'string' ? child : renderComponent( child ) );
 	}
 	return childrenHTML.join('');
-}
+};
 
-const createButton = ( label:string = 'Ne surtout pas cliquer ici', attributes:{} ):{} =>
+const createButton = ( label:string = 'Ne surtout pas cliquer ici', attributes:?{} ):any =>
 	createComponent( 'button', attributes, [ label ] );
 
-const createRoundedRedButton = ( label:string, attributes:{} ):{} => {
+const createRoundedRedButton = ( label:string, attributes:{} ):any => {
 	// on utilise ici une feature en stage-3 à l'heure actuelle
 	// cf. https://github.com/tc39/proposal-object-rest-spread
 	// nécessite l'activation des fonctionnalités javascript expérimentales dans chrome
@@ -136,4 +137,24 @@ const createRoundedRedButton = ( label:string, attributes:{} ):{} => {
 		style : 'border-radius: 5px; color: white; background-color: red'
 	};
 	return createButton( label, a );
-}
+};
+
+
+const component = createComponent( 'div', { style: 'border: 1px solid black' }, [
+	createComponent( 'h3', {}, [
+		'Test du ',
+		createComponent( 'strong', { style: 'color: blue' }, [ 'framework' ] ),
+		' ui'
+	] ),
+	createComponent( 'input', { type: 'text', value: 'Ca a l\'air de fonctionner correctement', style: 'width: 500px' } )
+] );
+renderComponent( component, document.querySelector( '#component-container' ));
+
+const button = createButton( 'Ceci est un bouton' );
+renderComponent( button, document.querySelector( '#button-container' ));
+
+const roundedRedButton = createRoundedRedButton(
+	'Ceci est un bouton rouge arrondi',
+	{ onclick: 'alert(\'au secours, on me clique dessus !\')' }
+);
+renderComponent( roundedRedButton, document.querySelector( '#rounded-red-button-container' ));
