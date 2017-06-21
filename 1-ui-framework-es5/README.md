@@ -13,7 +13,7 @@ L'ensemble du TP devra être réalisé en mode strict.
 1. implémenter la fonction createComponent(tagName, attributes, children). Cette fonction doit retourner un objet de la forme : 
     ```js
     {
-        tagName = '...',
+        tagName: '...',
         attributes: {...},
         children: [...]
     }
