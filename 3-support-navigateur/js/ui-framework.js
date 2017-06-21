@@ -33,7 +33,7 @@ const createComponent = ( tagName = 'div', attributes = {}, children = [] ) => (
 	// },
 	// Generator function :
 	// *getAttributes() {
-	// 	for (let attribute in this.attributes){
+	// 	for (const attribute in this.attributes){
 	// 		yield { attribute, value: getComponentAttribute(this, attribute) };
 	// 	}
 	// }
@@ -88,9 +88,9 @@ const renderComponent = ( component, element = null ) => {
  */
 const renderComponentAttributes = component => {
 	const attributesHTML = [];
-	// let étant une déclaration scopée, plus besoin de la déclarer en haut de fonction
+	// const étant une déclaration scopée, plus besoin de la déclarer en haut de fonction
 	// `attribute` n'existe qu'à l'intérieur du for
-	for ( let attribute in component.attributes ) {
+	for ( const attribute in component.attributes ) {
 		attributesHTML.push( ` ${attribute}="${getComponentAttribute(component, attribute)}"` );
 	}
 
