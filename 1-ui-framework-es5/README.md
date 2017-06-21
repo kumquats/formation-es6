@@ -18,7 +18,7 @@ L'ensemble du TP devra être réalisé en mode strict.
         children: [...]
     }
     ```
-2. Implémenter les fonctions setComponentAttribute( component, name, value ) et getComponentAttribute( component, name )
+2. Implémenter les fonctions setComponentAttribute( component, attribute, value ) et getComponentAttribute( component, attribute )
 3. Implémenter la fonction renderComponent( component, element ). Cette fonction calcule le code html correspondant au component passé en paramètre. Ce code html est soit injecté dans l'élément passé en paramètre soit retourné sous forme de chaine de caractère si aucun élément n'est passé. 
 La fonction renderComponent() s'appuiera sur deux fonctions : renderComponentAttributes( component ) et renderComponentChildren( component ) qui retournent le code html respectivement des attributs et des enfants du composant.
 4. Implémenter deux méthodes createButton() et createRoundedRedButton() qui permettent de rendre des components spécifiques (cf. code html fourni pour la signature des fonctions).
