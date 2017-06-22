@@ -4,7 +4,7 @@
   "description": "## Objectifs",
   "main": "js/ui-framework.js",
   "scripts": {
-    "build": "eslint src && flow && babel src -d build",
+    "build": "eslint src && flow && babel src -d build --source-maps",
     "watch": "babel src -d build --watch --source-maps",
     "flow": "flow",
     "eslint": "eslint"

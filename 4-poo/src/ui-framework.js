@@ -70,7 +70,7 @@ const getComponentAttribute = ( component, attribute:string ):string => componen
  * @see renderComponentAttributes()
  * @see renderComponentChildren()
  */
-const renderComponent = ( component:{tagName:string, attributes:{}, children:[]}, element = null ):string => {
+const renderComponent = ( component:{tagName:string, attributes:{}, children:[]}, element:?Element = null ):string => {
 	// utilisation du destructuring pour accéder à une propriété d'un objet
 	const {tagName} = component;
 	// utilisation d'une arrow function

@@ -244,3 +244,4 @@ button.render(document.querySelector('#button-container'));
 
 var roundedRedButton = new RoundedRedButton('Ceci est un bouton rouge arrondi', { onclick: 'alert(\'au secours, on me clique dessus !\')' });
 roundedRedButton.render(document.querySelector('#rounded-red-button-container'));
+//# sourceMappingURL=ui-framework.js.map

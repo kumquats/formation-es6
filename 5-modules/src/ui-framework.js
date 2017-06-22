@@ -16,7 +16,7 @@ class Component {
 	 * @param  {Object} attributes Liste des attributs html à ajouter sous la forme de paires clé:valeur
 	 * @param  {Array}  children   Liste des enfants du composant. Chaque enfant peut être un autre component ou une String.
 	 */
-	constructor( tagName:string = 'div', attributes:{} = {}, children:Array<string|Component> = [] ):any {
+	constructor( tagName:string = 'div', attributes:{} = {}, children:Array<string|Component> = [] ) {
 		// on utilise les valeurs par défaut d'ES6 pour les paramètres de la méthode
 		this.tagName = tagName;
 		this.attributes = attributes;
@@ -29,7 +29,7 @@ class Component {
 	 * @return {String} valeur de l'attribut demandé ou undefined si l'attribut n'exite pas
 	 * @see setComponentAttribute()
 	 */
-	getAttribute( attribute ):string {
+	getAttribute( attribute:string ):string {
 		return this.attributes[ attribute ];
 	}
 
@@ -65,7 +65,7 @@ class Component {
 	 * @return     {String}  code html des attributs du component
 	 */
 	renderAttributes():string {
-		const attributesHTML = [];
+		const attributesHTML:Array<string> = [];
 		// utilisation de la generator function *getAttributes
 		for ( const {attribute, value} of this.getAttributes() ) {
 			attributesHTML.push( ` ${attribute}="${value}"` );
@@ -74,7 +74,7 @@ class Component {
 	}
 
 	renderChildren():string {
-		const childrenHTML = [];
+		const childrenHTML:Array<string> = [];
 		// utilisation de l'iterator
 		// $FlowFixMe
 		for ( const child of this ){
@@ -119,7 +119,7 @@ class RoundedRedButton extends Button {
 	}
 }
 
-const component = new Component( 'div', { style: 'border: 1px solid black' }, [
+const component:Component = new Component( 'div', { style: 'border: 1px solid black' }, [
 	new Component( 'h3', {}, [
 		'Test du ',
 		new Component( 'strong', { style: 'color: blue' }, [ 'framework' ] ),
@@ -129,10 +129,10 @@ const component = new Component( 'div', { style: 'border: 1px solid black' }, [
 ] );
 component.render( document.querySelector( '#component-container' ));
 
-const button = new Button( 'Ceci est un bouton' );
+const button:Button = new Button( 'Ceci est un bouton' );
 button.render( document.querySelector( '#button-container' ));
 
-const roundedRedButton = new RoundedRedButton(
+const roundedRedButton:RoundedRedButton = new RoundedRedButton(
 	'Ceci est un bouton rouge arrondi',
 	{ onclick: 'alert(\'au secours, on me clique dessus !\')' }
 );
