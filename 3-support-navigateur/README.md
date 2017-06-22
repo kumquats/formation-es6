@@ -114,6 +114,11 @@ Mettre en place un environnement de développement permettant de compiler le cod
 	```
 	Si tout est valide du premier coup (on peut toujours rêver :stuck_out_tongue_winking_eye:) afin de s'assurer que le typage fonctionne correctement, tentez de faire une affectation incorrecte dans votre code et de relancer flow.
 
+**NB:** *en cas d'utilisation des Iterators, la vérification du code avec Flow peut poser problème : dans ce cas ajouter les commentaire suivant sur la ligne juste au dessus de la déclaration de l'iterator et du for-of qui l'utilise :*
+```
+// $FlowFixMe
+```
+
 
 ## Instructions : ESLint
 
