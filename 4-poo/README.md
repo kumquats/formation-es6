@@ -12,6 +12,12 @@ Mettre en pratique la nouvelle syntaxe de la programmation orientée objet en ES
 2. Remplacer le code utilisant la fonction createComponent par l'instanciation de la classe Component.
 3. Remplacer les fonction createButton et createRoundedRedButton par des classes Button et RoundedRedButton.
 
+**NB:** *en cas d'utilisation des Iterators, la vérification du code avec Flow peut poser problème : dans ce cas ajouter les commentaire suivant sur la ligne juste au dessus de la déclaration de l'iterator et du for-of qui l'utilise :*
+```
+// $FlowFixMe
+```
+
+
 ## Pour aller plus loin
 - Remplacer l'objet attributes par une Map
 - Remplacer le tableau children par un Set
