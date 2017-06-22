@@ -4,34 +4,40 @@
 Mettre en oeuvre les modules ES6 via webpack. Après un premier hello-world, porter le TP précédent sous la forme de modules.
 
 ## Instructions : Hello World
-- Initialiser un nouveau projet npm dans un nouveau dossier, puis le configurer pour utiliser Babel, ESLint et Flow (cf. TPs précédents)
-- Y installer également `webpack` avec l'option `--save-dev`
-- Ajouter un script dans le fichier package.json permettant de lancer plus facilement webpack :
-```
-"scripts": {
-    "build": "webpack"
-},
-```
-- Créer un dossier `js` `à la racine du projet
-- Dans ce dossier `js` créer un fichier **helloWorld.js**
+1. Initialiser un nouveau projet npm dans un nouveau dossier, puis le configurer pour utiliser Babel, ESLint et Flow (cf. TPs précédents)
+2. Y installer également `webpack` avec l'option `--save-dev`
+3. Ajouter un script dans le fichier package.json permettant de lancer plus facilement webpack :
+    ```
+    "scripts": {
+        "build": "webpack"
+    },
+    ```
+4. Créer un dossier `src` `à la racine du projet
+5. Dans ce dossier `src` créer un fichier **helloWorld.js**
     + Créer une fonction **"helloWorld"** permettant d'afficher le message 'Hello world !' dans la console
     + Exportez la fonction
-- Toujours dans le dossier `js`, créer un fichier **app.js**
+6. Toujours dans le dossier `src`, créer un fichier **app.js**
     + Importer le module `helloWorld` créé précédemment
     + Appeler la fonction retournée par ce module
-- A la racine du projet, créer un fichier webpack.config.js
-- Définissez le fichier d'entrée à `./js/app.js`
-- Faites en sorte que le fichier de sortie soit généré dans `./build/app.bundle.js`
-- Faites en sorte que les fichiers js soient compilés via le **babel-loader** tout en excluant le dossier **node_modules**
-- Configurer dans le `package.json` la commande `npm run build`
-- Créer un fichier `index.html` avec la structure HTML de base
+7. A la racine du projet, créer un fichier webpack.config.js en suivant [la documentation](https://webpack.js.org/concepts/)
+8. Définissez le fichier d'entrée à `./src/app.js`
+9. Faites en sorte que le fichier de sortie soit généré dans `./build/app.bundle.js`
+10. Faites en sorte que les fichiers js soient compilés via le **babel-loader** tout en excluant le dossier **node_modules**
+11. Configurer dans le `package.json` la commande `npm run build`
+12. Créer un fichier `index.html` avec la structure HTML de base
     + Inclure le fichier `./build/app.bundle.js` dans la page
-- Tester la page dans le navigateur, le message doit s'afficher dans la console.
-- ajouter la gestion des source-maps et tester l'ajout d'un breakpoint dans la fonction helloWorld
-- changer le chemin de build de webpack vers `.build/app.bundle.min.js`. Configurer webpack pour minifier et obfusquer le code généré, comparer le poids du fichier `app.bundle.min.js` avec le fichier non minifié `app.bundle.js`
-
+13. Tester la page dans le navigateur, le message doit s'afficher dans la console.
+14. ajouter la gestion des source-maps et tester l'ajout d'un breakpoint dans la fonction helloWorld
+15. changer le chemin de build de webpack vers `.build/app.bundle.min.js`. Configurer webpack pour [minifier et obfusquer](https://webpack.js.org/guides/production/) le code généré, comparer le poids du fichier `app.bundle.min.js` avec le fichier non minifié `app.bundle.js`
+16. configurer eslint, pour supporter l'utilisation des modules en ajoutant au fichier .eslintrc.js :
+    ```
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    ```
 
 ## Instructions : UI Framework & Modules
-- repartir de vos fichiers du TP précédent ou bien des fichiers contenus dans ce repository (qui correspondent à la correction du tp précédent !)
-- configurer le projet pour le compiler avec webpack et plus directement avec Babel (cf. Instructions HelloWorld)
-- Répartir les classes Component, Button et RoundedRedButton dans des modules différents, ne garder dans `ui-framework.js` que les instanciations et les appels aux méthodes render();
+
+1. repartir de vos fichiers du TP précédent ou bien des fichiers contenus dans ce repository (qui correspondent à la correction du tp précédent !)
+2. configurer le projet pour le compiler avec webpack et plus directement avec Babel (cf. Instructions HelloWorld)
+3. Répartir les classes Component, Button et RoundedRedButton dans des modules différents, ne garder dans `ui-framework.js` que les instanciations et les appels aux méthodes render();

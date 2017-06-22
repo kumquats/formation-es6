@@ -1,0 +1,32 @@
+{
+  "name": "ui-framework",
+  "version": "1.0.0",
+  "description": "## Objectifs",
+  "main": "js/ui-framework.js",
+  "scripts": {
+    "build": "eslint src && flow && babel src -d build --source-maps",
+    "watch": "babel src -d build --watch --source-maps",
+    "webpack": "webpack",
+    "flow": "flow",
+    "eslint": "eslint"
+  },
+  "author": "Thomas Fritsch",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "eslint": "^4.0.0",
+    "eslint-plugin-flowtype": "^2.34.0",
+    "flow-bin": "^0.48.0",
+    "webpack": "^3.0.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.23.0"
+  }
+}
