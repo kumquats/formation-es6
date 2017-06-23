@@ -36,19 +36,15 @@ form.addEventListener('submit', event => {
 
 const displayResults = ([ airbnbResult, {temperature} ]) => {
 	console.log(airbnbResult, temperature);
-	let html:Array<string> = [`<h2>Temperature : ${temperature}°C</h2>`];
-	// on parcourt les lieux
-	//
-	html = [
-		...html,
-		airbnbResult.map( item =>
-			// pour chaque lieu on ajoute un <li> avec les infos du lieu (image + titre)
-			`<li class="list-group-item">
-					<img style="width:100%" src="${item.listing.picture_url}" />
-					<h4>${item.listing.name}</h4>
-			</li>`
-		)
-	];
+	const title:Array<string> = [`<h2>Temperature : ${temperature}°C</h2>`];
+	const results:Array<string> = airbnbResult.map( item =>
+		// pour chaque lieu on ajoute un <li> avec les infos du lieu (image + titre)
+		`<li class="list-group-item">
+				<img style="width:100%" src="${item.listing.picture_url}" />
+				<h4>${item.listing.name}</h4>
+		</li>`
+	);
+	const html:Array<string> = [...title, ...results];
 	document.querySelector('.resultsContainer').innerHTML = html.join('');
 };
 
