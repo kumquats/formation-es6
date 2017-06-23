@@ -8,7 +8,6 @@ const loading:any = document.querySelector('.progress');
 form.addEventListener('submit', event => {
 	event.preventDefault();
 	loading.style.display = '';
-	// $FlowFixMe
 	const location:string = form.querySelector('[name=location]').value;
 	Promise.all([
 		API.getAirbnbByPlace( location ),
@@ -22,8 +21,8 @@ form.addEventListener('submit', event => {
 const displayResults = ([ airbnbResult, {temperature} ]) => {
 	console.log(airbnbResult, temperature);
 	loading.style.display = 'none';
-	const title = new Component('h2',{}, [`Temperature : ${temperature}°C`]);
-	const results:Array<Component> = new Component(
+	const title:Component = new Component('h2',{}, [`Temperature : ${temperature}°C`]);
+	const results:Component = new Component(
 		'ul',
 		{},
 		airbnbResult.map( item =>
