@@ -1,34 +1,19 @@
 // @flow
 
-
-
-
-// Appel du webservice qui permet de récupérer les logements en fonction d'un lieu
-const getAirbnbByPlace = ( city ) => {
-	return fetch('airbnb.php?location=' + city )
-		.then( airbnbResult => airbnbResult.json() )
-		.then( data => data.results_json.search_results );
-};
-const getWeatherByPlace = ( city ) => {
-	const apiKey = '851b41b99f54374d348017676b74fd02';
-	return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`, { method: 'get'})
-		.then( weather => weather.json()  );
-};
-const convertKelvinToCelsius = ( temperature ) => {
-	return fetch('temperature.php?temperature=' + temperature).then( temperature => temperature.json() );
-};
-
-
+import API from './API';
+import Component from './Component';
 
 const form:any = document.querySelector('form');
+const loading:any = document.querySelector('.progress');
 form.addEventListener('submit', event => {
 	event.preventDefault();
+	loading.style.display = '';
 	// $FlowFixMe
 	const location:string = form.querySelector('[name=location]').value;
 	Promise.all([
-		getAirbnbByPlace( location ),
-		getWeatherByPlace( location )
-			.then( weather => convertKelvinToCelsius( weather.main.temp ) )
+		API.getAirbnbByPlace( location ),
+		API.getWeatherByPlace( location )
+			.then( weather => API.convertKelvinToCelsius( weather.main.temp ) )
 	])
 		.then( displayResults )
 		.catch( error => console.log(error) );
@@ -36,15 +21,20 @@ form.addEventListener('submit', event => {
 
 const displayResults = ([ airbnbResult, {temperature} ]) => {
 	console.log(airbnbResult, temperature);
-	const title:Array<string> = [`<h2>Temperature : ${temperature}°C</h2>`];
-	const results:Array<string> = airbnbResult.map( item =>
-		// pour chaque lieu on ajoute un <li> avec les infos du lieu (image + titre)
-		`<li class="list-group-item">
-				<img style="width:100%" src="${item.listing.picture_url}" />
-				<h4>${item.listing.name}</h4>
-		</li>`
+	loading.style.display = 'none';
+	const title = new Component('h2',{}, [`Temperature : ${temperature}°C`]);
+	const results:Array<Component> = new Component(
+		'ul',
+		{},
+		airbnbResult.map( item =>
+			// pour chaque lieu on ajoute un <li> avec les infos du lieu (image + titre)
+			new Component('li', {class: 'list-group-item'}, [
+				new Component('img', {src: item.listing.picture_url, style:'width:100%' }),
+				new Component('h4', {}, [item.listing.name])
+			])
+		)
 	);
-	const html:Array<string> = [...title, ...results];
-	document.querySelector('.resultsContainer').innerHTML = html.join('');
+	const container:Component = new Component('div', {}, [title, results]);
+	container.render(document.querySelector('.resultsContainer'));
 };
 
