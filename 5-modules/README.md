@@ -38,6 +38,7 @@ Mettre en oeuvre les modules ES6 via webpack. Après un premier hello-world, por
 
 ## Instructions : UI Framework & Modules
 
-1. repartir de vos fichiers du TP précédent ou bien des fichiers contenus dans ce repository (qui correspondent à la correction du tp précédent !)
-2. configurer le projet pour le compiler avec webpack et plus directement avec Babel (cf. Instructions HelloWorld)
-3. Répartir les classes Component, Button et RoundedRedButton dans des modules différents, ne garder dans `ui-framework.js` que les instanciations et les appels aux méthodes render();
+1. Repartir de vos fichiers du TP précédent ou bien des fichiers contenus dans ce repository (qui correspondent à la correction du tp précédent !)
+2. Configurer le projet pour le compiler avec webpack et non plus directement avec Babel (cf. Instructions HelloWorld)
+3. Retirer la balise script de `babel-polyfill` du fichier index.html (on ne garde plus que la balise script de notre application) puis configure webpack pour utiliser `babel-polyfill` cf. https://babeljs.io/docs/usage/polyfill/
+4. Répartir les classes Component, Button et RoundedRedButton dans des modules différents, ne garder dans `ui-framework.js` que les instanciations et les appels aux méthodes render();

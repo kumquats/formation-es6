@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 module.exports = {
-	entry: './src/ui-framework.js',
+	entry: ['babel-polyfill','./src/app.js'],
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'app.bundle.min.js'

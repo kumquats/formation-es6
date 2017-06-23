@@ -6,6 +6,7 @@ Manipuler les Promises à travers une application permettant récupérer des inf
 ## Préparatifs
 - repartir de vos fichiers du TP précédent ou bien des fichiers contenus dans ce repository (qui correspondent à la correction du tp précédent !)
 - Noter que de nouveaux fichiers `app.html` et `src/app.js` sont présents. C'est dans ces fichiers que l'on va coder pour ce tp.
+- Noter également la présence de fichiers php `airbnb.php` et `temperature.php` qui serviront de webservices. `airbnb.php` permet de contourner la same-origin-policy et l'absence d'implémentation de CORS sur l'API Airbnb. `temperature.php` est un simple webservice "fait maison" permettant de convertir une température de Kelvin à Celsius.
 - Installer le polyfill fetch (https://github.com/github/fetch#installation)
     Exemple d'utilisation de fetch
     ```js
@@ -30,7 +31,7 @@ Manipuler les Promises à travers une application permettant récupérer des inf
 2. Créer une fonction **getAirbnbByPlace**
     + Prend la ville sélectionnée en paramètre
     + Permet de récupérer les logements d'une ville
-    + Utilise le webservice **proxy.php?location={ville}**
+    + Utilise le webservice **airbnb.php?location={ville}**
     + Retourne la promise générée par fetch
 3. Créer une fonction **convertKelvinToCelsius**
     + Prend une température en degré Kelvin en paramètre
