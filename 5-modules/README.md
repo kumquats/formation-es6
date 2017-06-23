@@ -23,13 +23,12 @@ Mettre en oeuvre les modules ES6 via webpack. Après un premier hello-world, por
 8. Définissez le fichier d'entrée à `./src/app.js`
 9. Faites en sorte que le fichier de sortie soit généré dans `./build/app.bundle.js`
 10. Faites en sorte que les fichiers js soient compilés via le **babel-loader** tout en excluant le dossier **node_modules**
-11. Configurer dans le `package.json` la commande `npm run build`
-12. Créer un fichier `index.html` avec la structure HTML de base
+11. Créer un fichier `index.html` avec la structure HTML de base
     + Inclure le fichier `./build/app.bundle.js` dans la page
-13. Tester la page dans le navigateur, le message doit s'afficher dans la console.
-14. ajouter la gestion des source-maps et tester l'ajout d'un breakpoint dans la fonction helloWorld
-15. changer le chemin de build de webpack vers `.build/app.bundle.min.js`. Configurer webpack pour [minifier et obfusquer](https://webpack.js.org/guides/production/) le code généré, comparer le poids du fichier `app.bundle.min.js` avec le fichier non minifié `app.bundle.js`
-16. configurer eslint, pour supporter l'utilisation des modules en ajoutant au fichier .eslintrc.js :
+12. Tester la page dans le navigateur, le message doit s'afficher dans la console.
+13. ajouter la gestion des source-maps et tester l'ajout d'un breakpoint dans la fonction helloWorld
+14. changer le chemin de build de webpack vers `.build/app.bundle.min.js`. Configurer webpack pour [minifier et obfusquer](https://webpack.js.org/guides/production/) le code généré, comparer le poids du fichier `app.bundle.min.js` avec le fichier non minifié `app.bundle.js`
+15. configurer eslint, pour supporter l'utilisation des modules en ajoutant au fichier .eslintrc.js :
     ```
     "parserOptions": {
         "sourceType": "module"
