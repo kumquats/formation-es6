@@ -1,5 +1,9 @@
+import config from 'config';
+
 export default class API {
 	// Appel du webservice qui permet de récupérer les logements en fonction d'un lieu
+	static apiKey = '851b41b99f54374d348017676b74fd02';
+
 	static getAirbnbByPlace( location:string ){
 		return fetch('airbnb.php?location=' + location )
 			.then( airbnbResult => airbnbResult.json() )
@@ -7,8 +11,7 @@ export default class API {
 	}
 
 	static getWeatherByPlace( location:string ) {
-		const apiKey = '851b41b99f54374d348017676b74fd02';
-		return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`, { method: 'get'})
+		return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${this.apiKey}`, { method: 'get'})
 			.then( weather => weather.json()  );
 	}
 

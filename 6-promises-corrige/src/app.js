@@ -32,7 +32,7 @@ form.addEventListener('submit', event => {
 		.catch( error => console.log(error) );
 });
 
-const displayResults = ([ airbnbResult, {temperature} ]) => {
+const displayResults = ( [ airbnbResult, {temperature} ] ) => {
 	console.log(airbnbResult, temperature);
 	// on masque la barre de loading
 	loading.style.display = 'none';
