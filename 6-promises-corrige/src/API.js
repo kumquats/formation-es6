@@ -1,5 +1,3 @@
-import config from 'config';
-
 export default class API {
 	// Appel du webservice qui permet de récupérer les logements en fonction d'un lieu
 	static apiKey = '851b41b99f54374d348017676b74fd02';
